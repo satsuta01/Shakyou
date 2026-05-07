@@ -15,6 +15,7 @@
         color:white;
         font-family:serif;
         overflow:hidden;
+        touch-action:manipulation;
     }
 
     #文字{
@@ -28,12 +29,14 @@
         font-size:14px;
         color:gray;
     }
+
     #数字{
         position:absolute;
         bottom:60px;
         font-size:30px;
         color:gray;
     }
+
     #タイトル{
         position:absolute;
         top:60px;
@@ -44,14 +47,17 @@
 </head>
 
 <body>
+
 <div id="タイトル">般若波羅蜜多心経</div>
+
 <div id="文字"></div>
 
 <div id="説明">
-Space：次へ / Backspace：戻る
+PC：Space / Backspace<br>
+スマホ：右タップで次・左タップで戻る
 </div>
-<div id="数字">
-</div>
+
+<div id="数字"></div>
 
 <script>
 
@@ -60,31 +66,69 @@ let 般若心経 = "仏説摩訶般若波羅蜜多心経観自在菩薩行深般
 let index = 0;
 
 const 文字 = document.getElementById("文字");
+const 数字 = document.getElementById("数字");
 
 function 表示更新(){
     文字.innerText = 般若心経[index];
-    数字.innerText = index;
+    数字.innerText = index + 1 + " / " + 般若心経.length;
 }
 
 表示更新();
 
+
+function 次へ(){
+    if(index < 般若心経.length - 1){
+        index++;
+        表示更新();
+    }
+}
+
+function 戻る(){
+    if(index > 0){
+        index--;
+        表示更新();
+    }
+}
+
 document.addEventListener("keydown", function(e){
+
     if(e.code === "Space"){
         e.preventDefault();
-
-        if(index < 般若心経.length - 1){
-            index++;
-            表示更新();
-        }
+        次へ();
     }
 
     if(e.code === "Backspace"){
         e.preventDefault();
+        戻る();
+    }
 
-        if(index > 0){
-            index--;
-            表示更新();
-        }
+});
+
+document.addEventListener("touchstart", function(e){
+
+    let x = e.touches[0].clientX;
+    let width = window.innerWidth;
+
+
+    if(x > width / 2){
+        次へ();
+    }
+
+    else{
+        戻る();
+    }
+
+});
+
+document.addEventListener("click", function(e){
+
+    let x = e.clientX;
+    let width = window.innerWidth;
+
+    if(x > width / 2){
+        次へ();
+    }else{
+        戻る();
     }
 
 });
@@ -92,5 +136,4 @@ document.addEventListener("keydown", function(e){
 </script>
 
 </body>
-</html>
 </html>
