@@ -53,7 +53,7 @@
 <div id="文字"></div>
 
 <div id="説明">
-PC：Space / Backspace<br>
+PC：Space・Enter / Backspace<br>
 スマホ：右タップで次・左タップで戻る
 </div>
 
@@ -92,7 +92,7 @@ function 戻る(){
 
 document.addEventListener("keydown", function(e){
 
-    if(e.code === "Space"){
+    if(e.code === "Space"||e.code === "Enter"){
         e.preventDefault();
         次へ();
     }
